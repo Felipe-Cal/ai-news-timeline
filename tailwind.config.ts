@@ -11,21 +11,17 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        neon: {
-          blue: "#00f3ff",
-          pink: "#ff00ff",
-          green: "#00ff9f",
-          purple: "#bc13fe",
+        gemini: {
+          blue: "#4285F4",
+          purple: "#A50E8E", // Adjusted purple
+          orange: "#F9AB00", // Adjusted orange
+          light: "#F0F4F9", // Light background similar to Gemini chat
         },
-        dark: {
-          bg: "#050511",
-          card: "rgba(255, 255, 255, 0.05)",
-        }
       },
-      boxShadow: {
-        'neon-blue': '0 0 10px #00f3ff, 0 0 20px #00f3ff',
-        'neon-pink': '0 0 10px #ff00ff, 0 0 20px #ff00ff',
-      }
+      backgroundImage: {
+        'gemini-gradient': 'linear-gradient(90deg, #4285F4, #9B72CB, #D96570)',
+        'gemini-shine': 'linear-gradient(45deg, rgba(255,255,255,0.8), rgba(255,255,255,0))',
+      },
     },
   },
   plugins: [],
