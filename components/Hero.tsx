@@ -4,11 +4,12 @@ import { SearchInput } from './SearchInput';
 interface HeroProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
+  onSearch: () => void;
   isLoading: boolean;
   hasSearched: boolean;
 }
 
-export const Hero = ({ searchQuery, onSearchChange, isLoading, hasSearched }: HeroProps) => {
+export const Hero = ({ searchQuery, onSearchChange, onSearch, isLoading, hasSearched }: HeroProps) => {
   return (
     <section className={`relative flex flex-col items-center justify-center px-4 transition-all duration-700 ease-in-out ${hasSearched ? 'py-10' : 'py-32 min-h-[70vh]'}`}>
       
@@ -35,6 +36,7 @@ export const Hero = ({ searchQuery, onSearchChange, isLoading, hasSearched }: He
           <SearchInput 
             value={searchQuery}
             onChange={onSearchChange}
+            onSearch={onSearch}
             isLoading={isLoading}
           />
         </div>

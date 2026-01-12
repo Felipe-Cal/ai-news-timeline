@@ -17,18 +17,9 @@ export default function Home() {
   const [subscribed, setSubscribed] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  // Debounce search
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (query.trim()) {
-        performSearch(query);
-      }
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, [query]);
-
   const performSearch = async (searchQuery: string) => {
+    if (!searchQuery.trim()) return;
+
     setLoading(true);
     setHasSearched(true);
     try {
@@ -73,6 +64,7 @@ export default function Home() {
       <Hero 
         searchQuery={query}
         onSearchChange={setQuery}
+        onSearch={() => performSearch(query)}
         isLoading={loading}
         hasSearched={hasSearched}
       />
