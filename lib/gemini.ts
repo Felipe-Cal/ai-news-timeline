@@ -15,9 +15,11 @@ export interface SearchResults {
   tutorials: SearchResultItem[];
   companies: SearchResultItem[];
   news: SearchResultItem[];
+  isMock?: boolean;
 }
 
 const MOCK_RESULTS: SearchResults = {
+  isMock: true,
   tools: [
     { title: "Example AI Tool", description: "A powerful tool for generating content.", url: "#", source: "ToolHub" },
     { title: "GenVideo Maker", description: "Create videos from text in seconds.", url: "#", source: "VideoAI" }
@@ -48,7 +50,9 @@ export const searchGemini = async (query: string): Promise<SearchResults> => {
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+    console.log(`Searching Gemini for: ${query}`);
 
     const prompt = `
       You are a helpful AI assistant. The user is searching for: "${query}".
@@ -72,12 +76,23 @@ export const searchGemini = async (query: string): Promise<SearchResults> => {
     const response = await result.response;
     const text = response.text();
 
-    // Clean up potential markdown formatting if Gemini adds it despite instructions
-    const cleanText = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    console.log("Gemini Raw Response:", text);
 
-    return JSON.parse(cleanText) as SearchResults;
+    // Robust JSON extraction
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      throw new Error("No JSON found in response");
+    }
+
+    const jsonString = jsonMatch[0];
+    const parsedData = JSON.parse(jsonString) as SearchResults;
+
+    return { ...parsedData, isMock: false };
+
   } catch (error) {
     console.error("Error fetching from Gemini:", error);
+    // Return mock results but maybe with a flag indicating it was an error?
+    // For now, let's stick to MOCK_RESULTS but log the error clearly.
     return MOCK_RESULTS;
   }
 };

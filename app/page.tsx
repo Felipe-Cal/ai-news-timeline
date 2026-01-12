@@ -6,7 +6,7 @@ import { SearchResults } from '@/components/SearchResults';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { searchGemini, SearchResults as SearchResultsType } from '@/lib/gemini';
-import { Bell } from 'lucide-react';
+import { Bell, AlertCircle } from 'lucide-react';
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -68,6 +68,17 @@ export default function Home() {
         isLoading={loading}
         hasSearched={hasSearched}
       />
+
+      {results?.isMock && (
+        <div className="container mx-auto px-4 mt-8">
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-center gap-3 text-amber-800">
+            <AlertCircle className="h-5 w-5 flex-shrink-0" />
+            <p className="text-sm">
+              <span className="font-bold">Demo Mode:</span> A valid Gemini API Key was not found. Showing mock results.
+            </p>
+          </div>
+        </div>
+      )}
 
       {results && <SearchResults data={results} />}
 
