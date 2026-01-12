@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Hero } from '@/components/Hero';
 import { SearchResults } from '@/components/SearchResults';
 import { Modal } from '@/components/ui/Modal';
