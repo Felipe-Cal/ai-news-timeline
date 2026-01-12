@@ -1,1 +1,1 @@
-
+This is a Next.js (App Router) project using Tailwind CSS. We use Lucide-react for icons. The goal is an AI News Timeline app. Use modular components and clean TypeScript types. All API keys should be accessed via process.env
